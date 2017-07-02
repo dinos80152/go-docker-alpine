@@ -16,8 +16,6 @@ install:
 
 before_deploy:
 - eval $(aws ecr get-login --region us-west-2)
-- docker tag meifamily/ptt-alertor:latest $AWS_Docker_Repo:latest
-- docker push $AWS_Docker_Repo:latest
 
 deploy:
 - provider: script
