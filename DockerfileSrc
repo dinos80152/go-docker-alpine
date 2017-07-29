@@ -1,0 +1,15 @@
+FROM golang:alpine
+# gcc for cgo
+
+RUN set -eux; \
+	apk add --no-cache --virtual git
+
+ENV GOPATH /go/
+ENV GO_WORKDIR $GOPATH/src/github.com/dinos80152/go-docker-alpine/
+
+WORKDIR $GO_WORKDIR
+
+ADD . $GO_WORKDIR
+
+RUN go get
+RUN go install

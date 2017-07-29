@@ -4,35 +4,13 @@ language: go
 
 services:
   - docker
-
-# before_install:
-#  - docker build -t dinos80152/go-docker-alpine .
-#  - docker run -d -p 127.0.0.1:80:8080 dinos80152/go-docker-alpine
-#  - docker ps -a
-
-install:
-- pip install --user awscli
-- export PATH=$PATH:$HOME/.local/bin
-
-before_deploy:
-- eval $(aws ecr get-login --region us-west-2)
+script:
+- docker build -t dinos80152/go-docker-alpine-src -f DockerfileSrc .
+- docker cp $(docker create dinos80152/go-docker-alpine-src):/go/bin/go-docker-alpine ./
+- docker build -t go-docker-alpine -f DockerfileBin .
 
 deploy:
-- provider: script
-  script:
-  - bash ./deploy/ecs-deploy -r us-west-2 -c ptt-alertor-cluster -n al -i $AWS_Docker_Repo -m 0 -M 200 -t 480 -D 1
-  on:
-    branch: master
-
-env:
-  global:
-  - AWS_ACCESS_KEY_ID=AKIAIE4PWSIS5SCEF3TA
-  - AWS_Docker_Repo=896146012256.dkr.ecr.us-west-2.amazonaws.com/ptt-alertor-repo
-  - secure: pcK6KNugqPILq29+pgPfbPNue+iK8w+4OtiZZwHBhsJ9bsggqBHfDRhGJd7PH/AecNkz4rYuBUea80BQcB/seRKtiHiBYrGPq+Bh+6KFTSoocBeRRB1gxVMonaAUd36FNdbvozIimA1GCCjWzaUe/BfwESmmuBIzEqf1wys9qV7F3YRASDeeG377CTDgAgBw7ClFofqyh4KXK8CmbIgOGW/+fsatxdA8dGB9ATWPzKICY8qJIjU/BXFuQuRQhv48d5ePRzVUNcx1qxTKbc9XHT3gmpxoBcNB6nPDUY9/MFfq0hz7RGAUl2RQRKtVvN3Hi3iVwwSoQXV8NDJS8Rbns2XX3KbjfT5UN91J7tBh13sYM6z25UTX3/R/d+wrJS4B63Lfs0UxpzIzLMlj/jnzEN1l6At4p2SPpNscGikORbEQ+AO9bjN3CTN9Zdy4PVA10rjOv+ejd+6Ta/Khi4MjsWGx388xvcfM7Cf8CGHJz1EiNpbWsGnea/p1mdmGHzzRSSNKV410PjWwgj5o0qk3lQFppbnDJmcXGhiQobvZ7oDryt9fabzz68jZ1BWzPnRyjmlcJQc3boyyMzuXT/v+u8QbqJkKXM5CjfqP+9mL0UGT+KULBZC7V2oDAnj9LDGyYSVDyT+KgEDkyU16AMUTvF2gtzlH2jkcMk/eNdhzFi0=
-
-
-#deploy:
-#  provider: heroku
-#  buildpack: go
-#  api_key:
-#    secure: fAXumnO5I+9Cvrxi9AU6z6xe8UAWuk94/AeM1wBZFSq49DcVqj3rwxvgNJ2pJSwUYZX2qBfZhReZ0xqAa5N9n6G8XC7Q6tz0oVUcHK+iJTOSqwyPaaNCUzXrsl0Ru5bt1HQhqzAmssugoa0r5dE8WJlVhuugic9al8yF6waKYE0DRaNwHI/C4IoPtHYnAK+wRd+6yOV5vY644/pCpb70Q67nEyI/hLGZ8EVVZOjHl/BS6BA07K8vbnOMyt3cdDw6RzCAK33KjErMZQ572xG2IXFxZb9goAQSSd+nxgRT//YkjiItxosAkkjM60y6Jy2z/6xszww6OVUBq71mGpObPGA5E6ubEalfICsD45cQ7VZo8AJ7qM6adP8Qihf5UUA5g7hIYAKiyc0XxJjwSzvylL0aTXhy9qnUBHZDento9LhKy+syyg9cANlen+Ww8cNNlyER6DN84pXMN3asQNMMmII1cXaHARfMoIu5k9HR3WOnn1vgTHls3lKHu6pjp8AznHfWep1uP4Y8k9M2gzpslHErlzSO7Z5MagIUByxB/jonBuSf/LaNOeME//+f+7ms2or+jLrGw+hv8Ij6+pTKYllS51BD/f9jdyRNhTVhRsscAm5OIEoH4uLznyVf2tzHVeD2x31rv2uj40F7l3kczdAgL1wbnYY71qdIoIlcxqA=
+ provider: heroku
+ buildpack: go
+ api_key:
+   secure: fAXumnO5I+9Cvrxi9AU6z6xe8UAWuk94/AeM1wBZFSq49DcVqj3rwxvgNJ2pJSwUYZX2qBfZhReZ0xqAa5N9n6G8XC7Q6tz0oVUcHK+iJTOSqwyPaaNCUzXrsl0Ru5bt1HQhqzAmssugoa0r5dE8WJlVhuugic9al8yF6waKYE0DRaNwHI/C4IoPtHYnAK+wRd+6yOV5vY644/pCpb70Q67nEyI/hLGZ8EVVZOjHl/BS6BA07K8vbnOMyt3cdDw6RzCAK33KjErMZQ572xG2IXFxZb9goAQSSd+nxgRT//YkjiItxosAkkjM60y6Jy2z/6xszww6OVUBq71mGpObPGA5E6ubEalfICsD45cQ7VZo8AJ7qM6adP8Qihf5UUA5g7hIYAKiyc0XxJjwSzvylL0aTXhy9qnUBHZDento9LhKy+syyg9cANlen+Ww8cNNlyER6DN84pXMN3asQNMMmII1cXaHARfMoIu5k9HR3WOnn1vgTHls3lKHu6pjp8AznHfWep1uP4Y8k9M2gzpslHErlzSO7Z5MagIUByxB/jonBuSf/LaNOeME//+f+7ms2or+jLrGw+hv8Ij6+pTKYllS51BD/f9jdyRNhTVhRsscAm5OIEoH4uLznyVf2tzHVeD2x31rv2uj40F7l3kczdAgL1wbnYY71qdIoIlcxqA=
