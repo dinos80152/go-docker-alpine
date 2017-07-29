@@ -9,6 +9,11 @@ script:
 - docker cp $(docker create dinos80152/go-docker-alpine-src):/go/bin/go-docker-alpine ./
 - docker build -t go-docker-alpine -f DockerfileBin .
 
+after_success:
+- docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" registry.heroku.com
+- docker tag go-docker-alpine registry.heroku.com/go-docker-alpine/web
+- docker push registry.heroku.com/go-docker-alpine/web
+
 deploy:
  provider: heroku
  buildpack: go
