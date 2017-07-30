@@ -1,15 +1,20 @@
+# Start from an Alpine image with the latest version of Go installed
 FROM golang:alpine
-# gcc for cgo
 
+# Install Git for go get
 RUN set -eux; \
 	apk add --no-cache --virtual git
 
+# Set ENV
 ENV GOPATH /go/
 ENV GO_WORKDIR $GOPATH/src/github.com/dinos80152/go-docker-alpine/
 
+# Set WORKDIR to go source code directory
 WORKDIR $GO_WORKDIR
 
+# Add files to image
 ADD . $GO_WORKDIR
 
+# Fetch Golang Dependency and Build Binary
 RUN go get
 RUN go install

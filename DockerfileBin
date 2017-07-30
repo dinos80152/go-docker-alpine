@@ -1,17 +1,15 @@
-# Start from a Debian image with the latest version of Go installed
-# and a workspace (GOPATH) configured at /go.
+# Start from a raw Alpine image
 FROM alpine:latest
 
+# Install ca-certificates for ssl
 RUN set -eux; \
 	apk add --no-cache --virtual ca-certificates
 
-# Copy the local package files to the container's workspace.
+# Copy binary into image
 ADD go-docker-alpine /
 
+# Execute binary when docker container starts
 CMD /go-docker-alpine
 
-# Run the outyet command by default when the container starts.
-# ENTRYPOINT /go-docker-alpine
-
-# Document that the service listens on port 9090.
-# EXPOSE 8080
+# Expose port 8080 to be connected from outside
+EXPOSE 8080
