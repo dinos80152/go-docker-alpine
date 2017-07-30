@@ -8,8 +8,10 @@ RUN set -eux; \
 # Copy the local package files to the container's workspace.
 ADD go-docker-alpine /
 
+CMD /go-docker-alpine
+
 # Run the outyet command by default when the container starts.
-ENTRYPOINT /go-docker-alpine
+# ENTRYPOINT /go-docker-alpine
 
 # Document that the service listens on port 9090.
-EXPOSE 8080
+# EXPOSE 8080
