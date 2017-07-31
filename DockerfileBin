@@ -6,10 +6,10 @@ RUN set -eux; \
 	apk add --no-cache --virtual ca-certificates
 
 # Copy binary into image
-ADD go-docker-alpine /
+ADD golang-docker-alpine /
 
 # Execute binary when docker container starts
-CMD /go-docker-alpine
+CMD /golang-docker-alpine
 
 # Expose port 8080 to be connected from outside
 EXPOSE 8080

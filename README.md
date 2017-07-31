@@ -1,10 +1,10 @@
-# go-docker-alpine
+# golang-docker-alpine
 
 ## Introduction
 
-A template for building a **minimize golang binary docker image**, which size only about 10 MB.
+A template for deploying a **minimize golang binary docker image**, which size only about 10 MB.
 
-This example uses Travis CI and Heroku to make a [demo](https://go-docker-alpine.herokuapp.com/).
+This example uses Travis CI and Heroku to make a [demo](https://golang-docker-alpine.herokuapp.com/).
 
 ## Comparison
 

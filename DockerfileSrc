@@ -7,7 +7,7 @@ RUN set -eux; \
 
 # Set ENV
 ENV GOPATH /go/
-ENV GO_WORKDIR $GOPATH/src/github.com/dinos80152/go-docker-alpine/
+ENV GO_WORKDIR $GOPATH/src/github.com/dinos80152/golang-docker-alpine/
 
 # Set WORKDIR to go source code directory
 WORKDIR $GO_WORKDIR
