@@ -1,5 +1,7 @@
 # golang-docker-alpine
 
+![Travis CI Badge](https://travis-ci.org/dinos80152/golang-docker-alpine.svg?branch=master)
+
 ## Introduction
 
 A template for deploying a **minimize golang binary docker image**, which size only about 10 MB.
