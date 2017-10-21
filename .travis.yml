@@ -10,7 +10,7 @@ before_install:
 
 # Build docker image by multi-stage builds
 script:
-  - docker build -t golang-docker-alpine -f .
+  - docker build -t golang-docker-alpine .
 
 # Push minimize image to heroku container registry
 after_success:

@@ -1,6 +1,6 @@
 # golang-docker-alpine
 
-![Travis CI Badge](https://travis-ci.org/dinos80152/golang-docker-alpine.svg?branch=master)
+[![Travis CI](https://travis-ci.org/dinos80152/golang-docker-alpine.svg?branch=master)](https://travis-ci.org/dinos80152/golang-docker-alpine)
 
 ## Introduction
 
