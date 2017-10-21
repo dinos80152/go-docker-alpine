@@ -1,0 +1,19 @@
+sudo: required
+
+language: go
+
+services:
+  - docker
+script:
+# build app binary on Alpine OS with golang package
+- docker build -t dinos80152/golang-docker-alpine-src -f DockerfileSrc .
+# Copy app binary from container to host
+- docker cp $(docker create dinos80152/golang-docker-alpine-src):/go/bin/golang-docker-alpine ./
+# Build docker image with pure alpine os and app binary
+- docker build -t golang-docker-alpine -f DockerfileBin .
+
+after_success:
+# Push minimize image to heroku container registry
+- docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" registry.heroku.com
+- docker tag golang-docker-alpine registry.heroku.com/golang-docker-alpine/web
+- docker push registry.heroku.com/golang-docker-alpine/web
